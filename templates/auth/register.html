@@ -6,6 +6,7 @@
         <div class="col-md-5 shadow p-4 rounded-5 m-auto">
             <form method="post">
                 {% csrf_token %}
+                <h2 class="text-center">Register Here</h2>
                 <div class="mb-3">
                     <label for="name" class="form-label">Username</label>
                     <input type="text" name="name" class="form-control" id="name" required>
@@ -22,7 +23,7 @@
                     <label for="confirmpassword" class="form-label">Re-type Password</label>
                     <input type="password" name="confirmpassword" class="form-control" id="confirmpassword" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary w-100">Signup</button>
             </form>
         </div>
     </div>

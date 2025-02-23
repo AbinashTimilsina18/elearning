@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
+from django.contrib.auth import authenticate,login,logout
+from .forms import *
 
 def Register(request):
     if request.method == 'POST':
@@ -35,4 +36,30 @@ def Register(request):
 
 
 def Login(request):
-    return render(request,'auth/login.html')
+    if request.method == 'POST':
+        form = UserLogin(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(request,username=data['username'], password=data['password'])
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Login successful')
+                if user.is_staff:
+                    return redirect('/admin/auth/user/')
+                else:
+                    return redirect('/')
+            else:
+                messages.error(request, 'Invalid Credentials')
+                return render(request, 'auth/login.html', {'logForm': form})
+
+    else:
+        form = UserLogin()
+
+    context = {
+        'logForm': form
+    }
+    return render(request, 'auth/login.html', context)
+
+def Logout(request):
+    logout(request)
+    return redirect ('login')
