@@ -12,6 +12,9 @@
             <li><a href="#" class="nav-link px-2 text-white fw-bold {% if request.path == '#' %} active {% endif %}">Pricing</a></li>
             <li><a href="#" class="nav-link px-2 text-white fw-bold {% if request.path == '#' %} active {% endif %}">FAQs</a></li>
             <li><a href="#" class="nav-link px-2 text-white fw-bold {% if request.path == '#' %} active {% endif %}">About</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'ChangePassword' %}" class="nav-link px-2 text-white fw-bold {% if request.path == '/ChangePassword' %} active {% endif %}">Change Password</a></li>
+        {% endif %}
         </ul>
 
         <div class="col-md-3 text-end">
