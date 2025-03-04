@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block main-content %}
+
+<div class="container">
+    <div class="d-flex justify-content-between flex-wrap">
+        {% for item in category %}
+        <a href="" class="text-decoration-none"><div class="card text-center shadow border-0 my-2" style="width: 18rem;">
+            <img src="{{item.image}}" class="card-img-top" alt="..." height="150px" width="100%">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">{{item.name}}</h5>
+                <p class="card-text">{{item.description}}</p>
+                <p class="text-secondary">{{item.created_at}}</p>
+            </div>
+        </div></a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock main-content %}
