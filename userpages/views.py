@@ -7,16 +7,3 @@ from django.contrib.auth.forms import UserChangeForm
 
 def index(request):
     return render(request,'userpage/index.html')
-
-
-@login_required
-def user_profile(request):
-    if request.method == "POST":
-        form = UserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
-    else:
-        form = UserChangeForm(instance=request.user)
-
-    return render(request, 'userpage/user_profile.html', {'form': form})
