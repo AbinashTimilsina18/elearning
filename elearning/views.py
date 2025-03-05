@@ -23,3 +23,10 @@ def AllCategory(request):
         'category' : Category.objects.all()
     }
     return render(request,'all_category.html',context)
+
+def CourseDetails(request,course_id):
+    course = Category.objects.get(id=course_id)
+    context = {
+        'course' : course
+    }
+    return render(request,'course_details.html',context)
