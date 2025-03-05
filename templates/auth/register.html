@@ -4,13 +4,9 @@
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center">
         <div class="col-md-5 shadow p-4 rounded-5 m-auto">
-            <form method="post" enctype="multipart/form-data">
+            <form method="post">
                 {% csrf_token %}
                 <h2 class="text-center">Register Here</h2>
-                <div class="mb-3">
-                    <label for="profile_picture" class="form-label">Profile Picture</label>
-                    <input type="file" name="profile_picture" class="form-control" id="profile_picture" accept="image/*">
-                </div>
                 <div class="mb-3">
                     <label for="fname" class="form-label">First_name</label>
                     <input type="text" name="fname" class="form-control" id="fname" required>

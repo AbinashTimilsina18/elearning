@@ -16,7 +16,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 import threading
 import logging
-from .models import UserProfile
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +62,6 @@ class RegistrationView(View):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-        profile_picture = request.FILES.get('profile_picture')
 
         context = {
             'fieldValues': request.POST
@@ -75,14 +73,10 @@ class RegistrationView(View):
                     messages.error(request, 'Password should be at least 6 characters long')
                     return render(request, 'auth/register.html', context)
                 
-                user = User.objects.create_user(username=username, email=email, first_name=fname, last_name=lname)
+                user = User.objects.create_user(username=username, email=email, fname=fname, lname=lname)
                 user.set_password(password)
                 user.is_active = False
                 user.save()
-
-                if profile_picture:
-                    profile = UserProfile(user=user, profile_picture=profile_picture)
-                    profile.save()
 
                 try:
                     current_site = get_current_site(request)
