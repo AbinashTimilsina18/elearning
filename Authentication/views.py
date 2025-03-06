@@ -57,8 +57,6 @@ class RegistrationView(View):
         return render(request, 'auth/register.html')
     
     def post(self, request):
-        fname = request.POST['fname']
-        lname = request.POST['lname']
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
@@ -73,7 +71,7 @@ class RegistrationView(View):
                     messages.error(request, 'Password should be at least 6 characters long')
                     return render(request, 'auth/register.html', context)
                 
-                user = User.objects.create_user(username=username, email=email, fname=fname, lname=lname)
+                user = User.objects.create_user(username=username, email=email)
                 user.set_password(password)
                 user.is_active = False
                 user.save()
@@ -134,20 +132,21 @@ class VerificationView(View):
 class LoginView(View):
     def get(self, request):
         return render(request, 'auth/login.html')
-    
+
     def post(self, request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
+        role = request.POST.get('role')
 
         try:
             user = User.objects.get(username=username, email=email)
         except User.DoesNotExist:
             messages.error(request, 'Invalid username or email, please try again.')
             return render(request, 'auth/login.html')
-        
+
         user = authenticate(request, username=username, password=password)
-        
+
         if user is not None:
             if not user.is_active:
                 messages.error(request, 'Your account is not activated. Please check your email for the activation link.')
@@ -156,11 +155,16 @@ class LoginView(View):
             login(request, user)
             messages.success(request, f'Welcome back, {user.username}!')
 
-            if user.is_superuser:
+            if role == 'admin' and user.is_superuser:
                 return redirect('http://127.0.0.1:8000/admin/')
-            else:
+            elif role == 'staff' and user.is_staff:
                 return redirect('/')
-        
+            elif role == 'user':
+                return redirect('/')
+            else:
+                messages.error(request, 'Invalid role for this user.')
+                return render(request, 'auth/login.html')
+
         messages.error(request, 'Invalid credentials, please try again.')
         return render(request, 'auth/login.html')
     
@@ -216,7 +220,6 @@ class RequestPasswordResetEmail(View):
             messages.success(request,'We have sent you an email to reset your password.')
             return render(request, 'auth/reset-password.html', context)
 
- 
 class CompletePasswordReset(View):
     def get(self,request,uidb64,token):
         context = {

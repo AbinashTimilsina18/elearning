@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block main-content %}
+
 <div class="container mt-5 mb-5">
     <div class="d-flex justify-content-center">
-        <div class="col-md-5 shadow p-3">
-            <form action="{% url 'login' %}" method="POST">
+        <div class="col-md-5 shadow p-4 rounded-5 m-auto">
+            <form method="POST" action="{% url 'login' %}">
                 {% csrf_token %}
                 <h2 class="text-center">Login Here</h2>
 
@@ -23,11 +24,21 @@
                     <input type="password" name="password" class="form-control" id="password" required>
                 </div>
 
+                <div class="mb-3">
+                    <label for="role" class="form-label">Select Role</label>
+                    <select name="role" class="form-control" id="role" required>
+                        <option value="admin">Admin</option>
+                        <option value="staff">Staff</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>
+
                 <div class="my-3">
                     <input type="submit" value="Login" class="btn btn-primary w-100">
                 </div>
 
-                <a class="d-flex text-decoration-none justify-content-center" href="{% url 'request-password' %}">Forgot Password?</a>
+                <a class="d-flex text-decoration-none justify-content-center" href="{% url 'request-password' %}">Forgot
+                    Password?</a>
 
                 <hr>
                 <small>Are you a new user?
@@ -37,4 +48,5 @@
         </div>
     </div>
 </div>
-{% endblock %}
+
+{% endblock main-content %}

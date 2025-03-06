@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -10,4 +11,14 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Vid(models.Model):
+    title = models.CharField(max_length=500)
+    pdf = models.FileField(upload_to='static/pdffile')
+    video = models.FileField(upload_to='static/video')
+
+    def __str__(self):
+        return self.title
+    
+
     

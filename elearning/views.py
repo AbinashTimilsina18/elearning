@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import *
+from .models import *
 
 # Create your views here.
 
@@ -30,3 +31,5 @@ def CourseDetails(request,course_id):
         'course' : course
     }
     return render(request,'course_details.html',context)
+
+
