@@ -1,5 +1,6 @@
 <header
-    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom px-5" style="background-color: #A9B5DF;">
+    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom px-5"
+    style="background-color: #A9B5DF;">
     <div class="col-md-3 mb-2 mb-md-0">
         <a href="/" class="d-inline-flex text-decoration-none text-white fw-bold fs-2"
             style="font-family: 'Courier New', Courier, monospace;">
@@ -11,8 +12,14 @@
         <li><a href="/"
                 class="nav-link px-2 text-white fw-bold {% if request.path == '/' %} active {% endif %}">Home</a></li>
         <li><a href="{% url 'allcourses' %}"
-                class="nav-link px-2 text-white fw-bold {% if request.path == '/all_courses' %} active {% endif %}">All
+                class="nav-link px-2 text-white fw-bold {% if request.path == '/all_courses' %} active {% endif %}">
                 Courses</a></li>
+        <li><a href="#" class="nav-link px-2 text-white fw-bold {% if request.path == '#' %} active {% endif %}">
+                Assignment</a></li>
+        <li><a href="#" class="nav-link px-2 text-white fw-bold {% if request.path == '#' %} active {% endif %}">
+                Notice</a></li>
+        <li><a href="#" class="nav-link px-2 text-white fw-bold {% if request.path == '#' %} active {% endif %}">
+                Contact Us</a></li>
     </ul>
 
     <div class="col-md-2 text-center">
@@ -21,13 +28,16 @@
             <a href="#" class="text-decoration-none text-danger" id="userDropdown" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <i class="bi bi-person-circle"></i> {{user.username}}
+                <i class="bi bi-chevron-down"></i>
             </a>
-            <ul class="dropdown-menu my-4 mx-3 border-0 text-white" style="background-color: #A9B5DF;" aria-labelledby="userDropdown">
+            <ul class="dropdown-menu my-4 mx-3 border-0 text-white" style="background-color: #A9B5DF;"
+                aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                 <li><a class="dropdown-item" href="{% url 'ChangePassword' %}">Change Password</a></li>
                 <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             </ul>
         </div>
+
         {% else %}
         <a href="{% url 'login' %}" class="text-danger fs-3"><i class="bi bi-person-circle"></i></a>
         {% endif %}
