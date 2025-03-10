@@ -10,16 +10,9 @@
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/"
                 class="nav-link px-2 text-white fw-bold {% if request.path == '/' %} active {% endif %}">Home</a></li>
-        <li><a href="{% url 'addcategory' %}"
-                class="nav-link px-2 text-white fw-bold {% if request.path == '/add_category' %} active {% endif %}">Add
+        <li><a href="{% url 'allcourses' %}"
+                class="nav-link px-2 text-white fw-bold {% if request.path == '/all_courses' %} active {% endif %}">All
                 Courses</a></li>
-        <li><a href="{% url 'allcategory' %}"
-                class="nav-link px-2 text-white fw-bold {% if request.path == '/all_category' %} active {% endif %}">All
-                Courses</a></li>
-        <li><a href="#"
-                class="nav-link px-2 text-white fw-bold {% if request.path == '#' %} active {% endif %}">FAQs</a></li>
-        <li><a href="#"
-                class="nav-link px-2 text-white fw-bold {% if request.path == '#' %} active {% endif %}">About</a></li>
     </ul>
 
     <div class="col-md-2 text-center">

@@ -11,8 +11,13 @@ class ProfileForm(forms.ModelForm):
         fields = ['username', 'email', 'first_name', 'last_name']
 
 
-# class PdfVideoForm(forms.ModelForm):
-#     class Meta:
-#         model = Video
-#         fields = "__all__"
+class PdfForm(forms.ModelForm):
+    class Meta:
+        model = Pdf
+        fields = "__all__"
+
+class VideoForm(forms.ModelForm):
+    class Meta:
+        model = Video
+        fields = "__all__"
 

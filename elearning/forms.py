@@ -6,3 +6,8 @@ class CategoryForm(ModelForm):
         model = Category
         fields = "__all__"
 
+class CoursesForm(ModelForm):
+    class Meta:
+        model = Courses
+        fields = "__all__"
+

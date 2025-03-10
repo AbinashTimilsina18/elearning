@@ -23,26 +23,43 @@ def Profile(request):
 
     return render(request, 'userpage/user_profile.html', {'form': form, 'user': user})
 
-# def AddPdfVideo(request):
-#     if request.method == 'POST':
-#         videoForm = PdfVideoForm(request.POST, request.FILES)
-#         if videoForm.is_valid():
-#             videoForm.save()
-#             return redirect('/')
-#         else:
-#             return render(request, 'userpage/add_pdf_video.html', {'pdfForm': videoForm})
+def AddPdf(request):
+    if request.method == 'POST':
+        pdfForm = PdfForm(request.POST, request.FILES)
+        if pdfForm.is_valid():
+            pdfForm.save()
+            return redirect('add_pdf')
+        else:
+            return render(request, 'userpage/add_pdf.html', {'pdfForm': pdfForm})
 
-#     videoForm = PdfVideoForm()
+    pdfForm = PdfForm()
     
-#     context = {
-#         'pdfForm': videoForm
-#     }
-#     return render(request, 'userpage/add_pdf_video.html', context)
+    context = {
+        'pdfForm': pdfForm
+    }
+    return render(request, 'userpage/add_pdf.html', context)
 
-# def Django(request):
-#     django = Video.objects.all()
-#     context = {
-#         'django' : django
-#     }
-#     return render(request,'component/django.html',context)
+def AddVideo(request):
+    if request.method == 'POST':
+        videoForm = VideoForm(request.POST, request.FILES)
+        if videoForm.is_valid():
+            videoForm.save()
+            return redirect('add_video')
+        else:
+            return render(request, 'userpage/add_video.html', {'videoForm': videoForm})
+
+    videoForm = VideoForm()
+    
+    context = {
+        'videoForm': videoForm
+    }
+    return render(request, 'userpage/add_video.html', context)
+
+def Django(request):
+    context = {
+        'djangopdf' : Pdf.objects.filter(django_pdf=True),
+        'djangovideo' : Video.objects.filter(django_video=True)
+    }
+    return render(request,'userpage/django.html',context)
+
 

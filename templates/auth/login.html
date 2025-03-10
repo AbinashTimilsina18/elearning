@@ -21,7 +21,8 @@
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" id="password" required>
+                    <input type="password" name="password" class="form-control" id="login-password" required>
+                    <input type="checkbox" id="login-show-password" onclick="togglePasswordVisibility('login')"> Show Password
                 </div>
 
                 <div class="mb-3">
@@ -37,8 +38,7 @@
                     <input type="submit" value="Login" class="btn btn-primary w-100">
                 </div>
 
-                <a class="d-flex text-decoration-none justify-content-center" href="{% url 'request-password' %}">Forgot
-                    Password?</a>
+                <a class="d-flex text-decoration-none justify-content-center" href="{% url 'request-password' %}">Forgot Password?</a>
 
                 <hr>
                 <small>Are you a new user?
@@ -50,3 +50,5 @@
 </div>
 
 {% endblock main-content %}
+
+

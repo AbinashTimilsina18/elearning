@@ -10,15 +10,18 @@
         <div class="col-md-8 col-12">
             <p>
                 <a href="/">Home</a> /
-                <small>{{course.name}}</small>
+                <small class="text-secondary">{{course.category}}</small>
             </p>
-            <h2 class="text-secondary mb-0">{{course.name}}</h2> 
-            <small class="text-secondary mt-0">{{course.category}}</small>
+            <h2 class="text-secondary mb-0">{{course.name}}</h2>
             <p class="fw-bold" style="text-align: justify;">Description:
                 <span class="text-secondary fw-light">{{course.description}}</span>
             </p>
+            <div class="d-flex justify-content-evenly">
+                <a href="{% url 'add_pdf' %}" class="btn btn-success my-2">Add PDF</a>
+                <a href="{% url 'viewpdfvideo' %}" class="btn btn-warning my-2">View PDF & Video</a>
+        <a href="{% url 'add_video' %}" class="btn btn-danger my-2">Add Video</a>
+            </div>
         </div>
-        <a href="" class="btn btn-primary my-2">Add PDF and Video</a>
     </div>
 </div>
 

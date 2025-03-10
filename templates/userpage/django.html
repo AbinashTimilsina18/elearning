@@ -2,4 +2,43 @@
 
 {% block main-content %}
 
+<div class="container">
+    <h2 class="text-danger text-center">Django PDF Files</h2>
+    <div class="d-flex justify-content-between flex-wrap my-2" id="pdf-container">
+        {% for item in djangopdf %}
+        <div class="card text-center shadow border-0 px-3 py-3 my-2 pdf-item" style="width: 16rem; display: none;">
+            <a href="{{ item.pdf_file }}" target="_blank">
+                <img src="{{ item.pdf_file }}" alt="Image for {{ item.title }}">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <button id="show-more-pdf" class="btn btn-primary my-3">Show More PDF</button>
+    <button id="show-less-pdf" class="btn btn-secondary my-3" style="display: none;">Show Less PDF</button>
+</div>
+
+<div class="container my-4">
+    <h2 class="text-danger text-center">Django Video</h2>
+    <div class="d-flex justify-content-between flex-wrap my-2" id="video-container">
+        {% for item in djangovideo %}
+        <div class="card text-center shadow border-0 px-3 py-3 my-2 video-item" style="width: 16rem; display: none;">
+            <a href="{{ item.video_file }}" target="_blank">
+                <img src="{{ item.video_file }}" alt="{{ item.title }}">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">{{ item.title }}</h5>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <button id="show-more-video" class="btn btn-primary my-3">Show More Video</button>
+    <button id="show-less-video" class="btn btn-secondary my-3" style="display: none;">Show Less Video</button>
+</div>
+
 {% endblock main-content %}
+
