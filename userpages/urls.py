@@ -7,4 +7,6 @@ urlpatterns = [
     path('add_pdf',AddPdf,name='add_pdf'),
     path('add_video',AddVideo,name='add_video'),
     path('django',Django,name='django'),
+    path('noticeform',noticeform,name='noticeform'),
+    path('notice',notice,name='notice'),
 ]

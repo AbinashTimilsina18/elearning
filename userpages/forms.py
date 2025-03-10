@@ -21,3 +21,8 @@ class VideoForm(forms.ModelForm):
         model = Video
         fields = "__all__"
 
+class NoticeForm(forms.ModelForm):
+    class Meta:
+        model = Notice
+        fields ="__all__"
+

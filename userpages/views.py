@@ -63,3 +63,25 @@ def Django(request):
     return render(request,'userpage/django.html',context)
 
 
+def noticeform(request):
+    if request.method == 'POST':
+        notice_form = NoticeForm(request.POST, request.FILES)
+        if notice_form.is_valid():
+            notice_form.save()
+            return redirect('http://127.0.0.1:8000/admin/')
+        else:
+            return render(request, 'userpage/noticeform.html', {'noticeForm': notice_form})
+
+    notice_form = NoticeForm()
+
+    context = {
+        'noticeForm': notice_form
+    }
+    return render(request, "userpage/noticeform.html", context)
+
+
+def notice(request):
+    context = {
+        'notice' : Notice.objects.all()
+    }
+    return render(request,"userpage/notice.html",context)

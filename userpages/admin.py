@@ -5,3 +5,4 @@ from .models import *
 
 admin.site.register(Pdf)
 admin.site.register(Video)
+admin.site.register(Notice)
