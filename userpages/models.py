@@ -16,3 +16,18 @@ class Video(models.Model):
     title = models.CharField(max_length=400)
     video_file = models.FileField(upload_to='static/pdfvideo', null=True, blank=True)
     django_video = models.BooleanField(null=True,blank=True)
+
+class Assignment(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    due_date = models.DateTimeField()
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['due_date']
+
