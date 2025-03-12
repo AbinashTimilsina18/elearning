@@ -13,7 +13,7 @@
                 <select name="assignment" class="form-control" id="id_assignment">
                     <option value="{{ assignment.id }}">{{ assignment.title }}</option>
                     {% for assignment in assignments %}
-                        <option value="{{ assignment.id }}" {% if assignment.id == selected_assignment %}selected{% endif %}>
+                        <option value="{{ assignment.id }}" {% if assignment.id == this_assignment.id %}selected{% endif %}>
                             {{ assignment.title }}
                         </option>
                     {% endfor %}
@@ -38,4 +38,4 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-{% endblock main-content %}
+{% endblock %}

@@ -26,7 +26,7 @@ class NoticeForm(forms.ModelForm):
         model = Notice
         fields ="__all__"
 
-<<<<<<< HEAD
+
 class AssignmentForm(forms.ModelForm):
     class Meta:
         model = Assignment
@@ -39,14 +39,9 @@ class AssignmentForm(forms.ModelForm):
 class SubmissionForm(forms.ModelForm):
     class Meta:
         model = Submission
-        fields = ['assignment', 'file']
+        fields = ['assignment', 'pdf_file']
 
-    def clean_file(self):
-        file = self.cleaned_data.get('file')
-        return file
-
+    assignment = forms.ModelChoiceField(queryset=Assignment.objects.all())
+    pdf_file = forms.FileField()
 
 
-
-=======
->>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477

@@ -65,12 +65,9 @@ def Django(request):
 
 
 def noticeform(request):
-<<<<<<< HEAD
     if not request.user.is_superuser:
         return redirect('login')
 
-=======
->>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477
     if request.method == 'POST':
         notice_form = NoticeForm(request.POST, request.FILES)
         if notice_form.is_valid():
@@ -87,15 +84,10 @@ def noticeform(request):
     return render(request, "userpage/noticeform.html", context)
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477
 def notice(request):
     context = {
         'notice' : Notice.objects.all()
     }
-<<<<<<< HEAD
     return render(request,"userpage/notice.html",context)
 
 
@@ -145,17 +137,20 @@ def delete_assignment(request, pk):
 
 @login_required
 def submit_assignment(request, assignment_id):
+    # Fetch the user's courses
     user_courses = Courses.objects.filter(users=request.user)
+    # Fetch the assignments that are linked to those courses
     assignments = Assignment.objects.filter(courses__in=user_courses)
 
+    # Get the specific assignment being submitted
     assignment = Assignment.objects.get(id=assignment_id)
 
     if request.method == "POST":
         form = SubmissionForm(request.POST, request.FILES)
         if form.is_valid():
             submission = form.save(commit=False)
-            submission.user = request.user
-            submission.assignment = assignment
+            submission.user = request.user  # Set the user
+            submission.assignment = assignment  # Assign the current assignment
             submission.save()
             return redirect('submission_success')
     else:
@@ -167,11 +162,8 @@ def submit_assignment(request, assignment_id):
         'assignment': assignment,
     })
 
+
+
 def submission_success(request):
     return render(request, 'userpage/submission_success.html')
 
-
-
-=======
-    return render(request,"userpage/notice.html",context)
->>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477

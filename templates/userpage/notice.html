@@ -2,20 +2,13 @@
 
 {% block main-content %}
 
-<<<<<<< HEAD
 <div class="container d-flex justify-content-center  my-5">
     {% for item in notice %}
     <div class="card col-md-6 shadow border-0">
         <div class="card-body">
         <i class="bi bi-megaphone-fill d-flex justify-content-center py-3 text-danger display-1"></i>
             <h4 class="card-title text-center fw-bold">{{item.title}}</h4>
-=======
-<div class="container my-5">
-    {% for item in notice %}
-    <div class="card shadow border-0">
-        <div class="card-body">
             <h5 class="card-title text-center">{{item.title}}</h5>
->>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477
             <p class="card-text">{{item.content}}</p>
             <p class="card-text text-end">{{item.author}}</p>
             <p class="card-text text-end">{{item.created_at}}</p>
