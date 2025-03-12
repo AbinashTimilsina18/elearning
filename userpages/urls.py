@@ -9,12 +9,10 @@ urlpatterns = [
     path('django',Django,name='django'),
     path('noticeform',noticeform,name='noticeform'),
     path('notice',notice,name='notice'),
-<<<<<<< HEAD
     path('createassignment',create_assignment,name='createassignment'),
     path('viewassignment',view_assignment,name='viewassignment'),
     path('delete_assignment/<int:pk>/', delete_assignment, name='delete_assignment'),
     path('submit/<int:assignment_id>/', submit_assignment, name='submit_assignment'),
     path('submission_success/', submission_success, name='submission_success'),
-=======
->>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477
+
 ]
