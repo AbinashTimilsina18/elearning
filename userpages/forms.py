@@ -26,6 +26,7 @@ class NoticeForm(forms.ModelForm):
         model = Notice
         fields ="__all__"
 
+<<<<<<< HEAD
 class AssignmentForm(forms.ModelForm):
     class Meta:
         model = Assignment
@@ -47,3 +48,5 @@ class SubmissionForm(forms.ModelForm):
 
 
 
+=======
+>>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477

@@ -24,6 +24,7 @@ class Notice(models.Model):
     author=models.CharField(max_length=200)
 
     def __str__(self):
+<<<<<<< HEAD
         return self.title
     
 class Assignment(models.Model):
@@ -52,3 +53,6 @@ class Submission(models.Model):
 
 
 
+=======
+        return self.title
+>>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477

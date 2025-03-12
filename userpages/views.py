@@ -65,9 +65,12 @@ def Django(request):
 
 
 def noticeform(request):
+<<<<<<< HEAD
     if not request.user.is_superuser:
         return redirect('login')
 
+=======
+>>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477
     if request.method == 'POST':
         notice_form = NoticeForm(request.POST, request.FILES)
         if notice_form.is_valid():
@@ -84,11 +87,15 @@ def noticeform(request):
     return render(request, "userpage/noticeform.html", context)
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477
 def notice(request):
     context = {
         'notice' : Notice.objects.all()
     }
+<<<<<<< HEAD
     return render(request,"userpage/notice.html",context)
 
 
@@ -165,3 +172,6 @@ def submission_success(request):
 
 
 
+=======
+    return render(request,"userpage/notice.html",context)
+>>>>>>> f0ef7fb847c6cef30771f2fdf3fbeedeb3dc5477
