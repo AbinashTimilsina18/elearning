@@ -13,6 +13,7 @@ class Category(models.Model):
 
 class Courses(models.Model):
     category = models.ForeignKey(Category,on_delete=models.CASCADE,null=True)
+    users = models.ManyToManyField(User, related_name='courses')
     image = models.FileField(upload_to='static/uploads', null=True)
     name = models.CharField(max_length=200, blank=False, null=False)
     description = models.TextField(max_length=2000, blank=False, null=False)

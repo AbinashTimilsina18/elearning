@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block main-content %}
+<div class="container mt-5">
+    <h2>Submit Assignment</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="id_assignment">Assignment</label>
+                <select name="assignment" class="form-control" id="id_assignment">
+                    <option value="{{ assignment.id }}">{{ assignment.title }}</option>
+                    {% for assignment in assignments %}
+                        <option value="{{ assignment.id }}" {% if assignment.id == selected_assignment %}selected{% endif %}>
+                            {{ assignment.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if form.assignment.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form.assignment.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="id_pdf_file">Upload PDF</label>
+                <input type="file" name="pdf_file" class="form-control-file" id="id_pdf_file">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock main-content %}

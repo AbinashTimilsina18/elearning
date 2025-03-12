@@ -70,6 +70,7 @@ JAZZMIN_SETTINGS = {
 
         # external url that opens in a new window (Permissions can be added)
         {"name": "Index Page", "url": "http://127.0.0.1:8000/", "new_window": True},
+        {"name": "Add Notice", "url": "http://127.0.0.1:8000/noticeform", "new_window": True},
     ],
 
 }

@@ -21,3 +21,29 @@ class VideoForm(forms.ModelForm):
         model = Video
         fields = "__all__"
 
+class NoticeForm(forms.ModelForm):
+    class Meta:
+        model = Notice
+        fields ="__all__"
+
+class AssignmentForm(forms.ModelForm):
+    class Meta:
+        model = Assignment
+        fields = ['title', 'description', 'pdf_file', 'due_date', 'courses']
+        widgets = {
+            'due_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }
+
+
+class SubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Submission
+        fields = ['assignment', 'file']
+
+    def clean_file(self):
+        file = self.cleaned_data.get('file')
+        return file
+
+
+
+
