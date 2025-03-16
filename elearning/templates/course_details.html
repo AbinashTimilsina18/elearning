@@ -17,9 +17,13 @@
                 <span class="text-secondary fw-light">{{course.description}}</span>
             </p>
             <div class="d-flex justify-content-evenly">
+            {% if user.is_authenticated and user.is_staff %}
                 <a href="{% url 'add_pdf' %}" class="btn btn-success my-2">Add PDF</a>
                 <a href="{% url 'viewpdfvideo' %}" class="btn btn-warning my-2">View PDF & Video</a>
                 <a href="{% url 'add_video' %}" class="btn btn-danger my-2">Add Video</a>
+            {% else %}
+                <a href="{% url 'viewpdfvideo' %}" class="btn btn-warning my-2">View PDF & Video</a>
+            {% endif %}
             </div>
         </div>
     </div>

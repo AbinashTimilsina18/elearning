@@ -1,0 +1,12 @@
+:root{
+    --main-color:#5e17eb;
+}
+
+.color{
+    color: var(--main-color);
+}
+
+header{
+    color: var(--main-color);
+}
+

@@ -14,5 +14,5 @@ urlpatterns = [
     path('delete_assignment/<int:pk>/', delete_assignment, name='delete_assignment'),
     path('submit/<int:assignment_id>/', submit_assignment, name='submit_assignment'),
     path('submission_success/', submission_success, name='submission_success'),
-
+    path('assignment_submit/', assignment_submit, name='assignment_submit'),
 ]

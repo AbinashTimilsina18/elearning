@@ -42,11 +42,10 @@ class Assignment(models.Model):
 class Submission(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
-    file = models.FileField(upload_to='static/submission')
+    file = models.FileField(upload_to='submission')
     submitted_at = models.DateTimeField(auto_now_add=True)
-
+    
     def __str__(self):
         return f"{self.user.username} - {self.assignment.title}"
     
-
 

@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block main-content %}
-
+{% if user.is_authenticated and user.is_staff %}
 <div class="container d-flex justify-content-center">
     <a href="{% url 'createassignment' %}" class="btn btn-danger btn-sm">Create Assignment</a>
 </div>
+{% endif %}
 
 <div class="container my-5">
     <div class="col-md-12 m-auto">
@@ -36,6 +37,7 @@
             <thead class="bg-light">
                 <tr>
                     <th class="text-center px-4">S.No</th>
+                    <th class="text-center px-4">Courses</th>
                     <th class="text-center px-4">Title</th>
                     <th class="text-center px-4">Description</th>
                     <th class="text-center px-4">PDF File</th>
@@ -48,17 +50,18 @@
                 {% for item in assign %}
                 <tr>
                     <td class="text-center">{{ forloop.counter }}</td>
+                    <td class="text-center px-4">{{item.courses.name}}</td>
                     <td class="text-center">{{ item.title }}</td>
                     <td class="text-center">{{ item.description }}</td>
                     <td class="text-center">
-                        <a href="{{ item.pdf_file.url }}" target="_blank">View Assignment</a>
+                        <a href="{{item.pdf_file}}" target="_blank">View Assignment</a>
                     </td>
                     <td class="text-center">{{ item.due_date }}</td>
                     <td class="text-center">{{ item.assigned_by }}</td>
                     <td class="text-center">
                         {% if user.is_authenticated %}
                         {% if user.is_staff %}
-                        <a href="#" class="btn btn-danger btn-sm">
+                        <a href="{% url 'assignment_submit' %}" class="btn btn-danger btn-sm">
                             <i class="bi bi-eye-fill"></i> View
                         </a>
                         <a href="{% url 'delete_assignment' item.pk %}" class="btn btn-danger btn-sm"

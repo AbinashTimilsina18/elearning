@@ -83,6 +83,7 @@ def noticeform(request):
     }
     return render(request, "userpage/noticeform.html", context)
 
+
 def notice(request):
     context = {
         'notice' : Notice.objects.all()
@@ -115,9 +116,9 @@ def view_assignment(request):
     selected_course = request.GET.get('course')
 
     if selected_course:
-        assignments = Assignment.objects.filter(courses__name=selected_course)
+        assignments = Assignment.objects.filter(courses__name=selected_course, pdf_file__isnull=False)
     else:
-        assignments = Assignment.objects.all()
+        assignments = Assignment.objects.filter(pdf_file__isnull=False)
 
     context = {
         'assign': assignments,
@@ -127,18 +128,22 @@ def view_assignment(request):
     return render(request, 'userpage/view_assignment.html', context)
 
 
+
 def delete_assignment(request, pk):
     assignment = get_object_or_404(Assignment, pk=pk)
-
     assignment.delete()
-
     return redirect('createassignment')
+
 
 @login_required
 def submit_assignment(request, assignment_id):
+
     user_courses = Courses.objects.filter(users=request.user)
-    assignments = Assignment.objects.filter(courses__in=user_courses)
-    assignment = Assignment.objects.get(id=assignment_id)
+
+    assignment = get_object_or_404(Assignment, id=assignment_id)
+
+    if assignment.courses not in user_courses:
+        return redirect('/')
 
     if request.method == "POST":
         form = SubmissionForm(request.POST, request.FILES)
@@ -153,11 +158,18 @@ def submit_assignment(request, assignment_id):
 
     return render(request, 'userpage/submit_assignment.html', {
         'form': form,
-        'assignments': assignments,
         'assignment': assignment,
     })
+
+
+
 
 def submission_success(request):
     return render(request, 'userpage/submission_success.html')
 
 
+def assignment_submit(request):
+    context = {
+        'submit': Submission.objects.all()
+    }
+    return render(request, 'userpage/assignment_submit.html',context)

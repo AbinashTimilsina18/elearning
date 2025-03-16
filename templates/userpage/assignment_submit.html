@@ -1,0 +1,46 @@
+
+{% extends "base.html" %}
+
+{% block main-content %}
+
+<div class="container my-5">
+    <div class="col-md-12 m-auto">
+        <h2 class="text-success bg-success-subtle text-center p-3 rounded">Submitted Assignment</h2>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="bg-light">
+                <tr>
+                    <th class="text-center px-4">S.No</th>
+                    <th class="text-center px-4">User</th>
+                    <th class="text-center px-4">Assignment</th>
+                    <th class="text-center px-4">File </th>
+                    <th class="text-center px-4">Submitted_at</th>
+                    <th class="text-center px-4">Due date</th>
+                    <th class="text-center px-4">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in submit %}
+                <tr>
+                    <td class="text-center">{{ forloop.counter }}</td>
+                    <td class="text-center">{{ item.user}}</td>
+                    <td class="text-center">{{ item.assignment }}</td>
+                    <td class="text-center">
+                        <a href="{{item.file}}" target="_blank">View Assignment</a>
+                    </td>
+                    <td class="text-center">{{ item.submitted_at }}</td>
+                   <td class="text-center">{{ item.assignment.due_date }}</td>
+
+                    <td class="text-center">
+                        <a href="{% url 'delete_assignment' item.pk %}" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure you want to delete this item?')">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock main-content %}
