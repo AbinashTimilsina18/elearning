@@ -26,6 +26,8 @@ class Notice(models.Model):
     def __str__(self):
         return self.title
     
+from django.utils import timezone
+
 class Assignment(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()

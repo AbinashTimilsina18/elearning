@@ -168,8 +168,27 @@ def submission_success(request):
     return render(request, 'userpage/submission_success.html')
 
 
+
 def assignment_submit(request):
+    courses = Courses.objects.all()
+    selected_course = request.GET.get('course', '')
+    
+    user = request.user
+
+    if selected_course:
+        assignments = Assignment.objects.filter(courses__name=selected_course)
+    else:
+        assignments = Assignment.objects.all()
+
+    submissions = Submission.objects.filter(assignment__in=assignments, user=user)
+
     context = {
-        'submit': Submission.objects.all()
+        'courses': courses,
+        'assign': submissions,
+        'selected_course': selected_course,
     }
-    return render(request, 'userpage/assignment_submit.html',context)
+    
+    return render(request, 'userpage/assignment_submit.html', context)
+
+
+
