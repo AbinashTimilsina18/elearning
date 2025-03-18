@@ -9,6 +9,7 @@ admin.site.register(Notice)
 
 admin.site.register(Assignment)
 admin.site.register(Submission)
+admin.site.register(Staff)
 
 
 

@@ -51,3 +51,15 @@ class Submission(models.Model):
         return f"{self.user.username} - {self.assignment.title}"
     
 
+class Staff(models.Model):
+    image = models.FileField(upload_to='static/staff')
+    name = models.CharField(max_length=200)
+    post = models.CharField(max_length=200)
+    description = models.TextField()
+    
+
+    def __str__(self):
+        return f"{self.name}-{self.post}"
+
+
+

@@ -8,7 +8,13 @@ from elearning.models import *
 # Create your views here.
 
 def index(request):
-    return render(request,'userpage/index.html')
+    context = {
+        'staff': Staff.objects.all(),
+        'course': Courses.objects.filter(top_cousrses=True)[:4],
+        'trending': Courses.objects.filter(trending=True)[:4]
+
+    }
+    return render(request, 'userpage/index.html', context)
 
 @login_required
 def Profile(request):

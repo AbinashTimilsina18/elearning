@@ -31,33 +31,68 @@
 
 <div class="container">
   <div class="row">
-    <h1 class="text-center mb-3">Top customers</h1>
+    <h1 class="text-center mb-3">Our Staffs </h1>
+    {% for item in staff %}
     <div class="col-lg-4 text-center">
-      <img src="" class="rounded-circle" width="140" height="140" alt="Image 1">
-      <h2 class="fw-normal"></h2>
-      <p>
-      </p>
+      <img src="{{item.image}}" class="rounded-circle" width="140" height="140" alt="Image 1">
+      <h2 class="fw-normal">{{item.name}}</h2>
+      <p>{{item.post}}</p>
+      <p>{{item.description}}</p>
+
     </div>
+    {% endfor %}
   </div>
 </div>
 
 <div class="container">
-  <div class="card" style="width: 18rem;">
-    <img src="/static/images/html.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">html</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-        content.</p>
+  <div class="row justify-content-center mt-5">
+    <h1 class="text-center mb-4"> Courses</h1>
+    {% for item in course %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+      <a href="/course_details/{{item.id}}" class="card text-decoration-none">
+        <div class="text-center shadow border-0 h-100">
+          <img src="{{item.image}}" class="card-img-top" alt="..." height="150px" width="100%">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold">{{item.name}}</h5>
+            <p class="card-text" style="text-align: justify;">
+              {{item.description|truncatewords:9}}
+            </p>
+            <p class="text-secondary mt-auto">{{item.created_at}}</p>
+          </div>
+        </div>
+      </a>
     </div>
-    <div class="card-body">
-      <div class="rating">
-        <span class="bi bi-star-fill checked"></span>
-        <span class="bi bi-star-fill checked"></span>
-        <span class="bi bi-star-fill checked"></span>
-        <span class="bi bi-star"></span>
-        <span class="bi bi-star"></span>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </div>
+
+
+<!-- owl-carousel2 start -->
+<div class="owlcarousel">
+  <p class="fw-bold fs-1 text-center">Deals Of The Day</p>
+  <div class="owl-carousel owl-theme">
+    {% for item in trending %}
+    <div class="item">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+        <a href="/course_details/{{item.id}}" class="card text-decoration-none">
+          <div class="text-center shadow border-0 h-100">
+            <img src="{{item.image}}" class="card-img-top" alt="..." height="150px" width="100%">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title fw-bold">{{item.name}}</h5>
+              <p class="card-text" style="text-align: justify;">
+                {{item.description|truncatewords:9}}
+              </p>
+              <p class="text-secondary mt-auto">{{item.created_at}}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+<!-- owl-carousel2 end -->
 {% endblock main-content %}
