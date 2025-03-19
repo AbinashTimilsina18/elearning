@@ -6,14 +6,14 @@
 
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        
+
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label for="id_assignment">Assignment</label>
                 <select name="assignment" class="form-control" id="id_assignment">
-                    <option value="{{ assignment.id }}">{{ assignment.title }}</option>
+                    <option value="">Select Assignment</option>  <!-- Default option -->
                     {% for assignment in assignments %}
-                        <option value="{{ assignment.id }}" {% if assignment.id == this_assignment.id %}selected{% endif %}>
+                        <option value="{{ assignment.id }}" {% if assignment.id == assignment.id %}selected{% endif %}>
                             {{ assignment.title }}
                         </option>
                     {% endfor %}
@@ -31,7 +31,7 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label for="id_pdf_file">Upload PDF</label>
-                <input type="file" name="pdf_file" class="form-control-file" id="id_pdf_file">
+                <input type="file" name="pdf_file" class="form-control-file" id="id_pdf_file" required>
             </div>
         </div>
 

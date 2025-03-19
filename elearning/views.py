@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .forms import *
 from .models import *
 from userpages.models import *
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -57,7 +58,7 @@ def AllCourses(request):
     }
     return render(request, 'all_courses.html', context)
 
-
+@login_required
 def CourseDetails(request,course_id):
     course = Courses.objects.get(id=course_id)
     context = {

@@ -11,7 +11,7 @@ def index(request):
     context = {
         'staff': Staff.objects.all(),
         'course': Courses.objects.filter(top_cousrses=True)[:4],
-        'trending': Courses.objects.filter(trending=True)[:4]
+        'trend': Trend.objects.filter(trend=True)[:4]
 
     }
     return render(request, 'userpage/index.html', context)
@@ -143,13 +143,14 @@ def delete_assignment(request, pk):
 
 @login_required
 def submit_assignment(request, assignment_id):
-
+  
     user_courses = Courses.objects.filter(users=request.user)
 
+  
     assignment = get_object_or_404(Assignment, id=assignment_id)
 
     if assignment.courses not in user_courses:
-        return redirect('/')
+        return redirect('/') 
 
     if request.method == "POST":
         form = SubmissionForm(request.POST, request.FILES)
@@ -158,15 +159,16 @@ def submit_assignment(request, assignment_id):
             submission.user = request.user
             submission.assignment = assignment
             submission.save()
-            return redirect('submission_success')
+            return redirect('submission_success') 
     else:
         form = SubmissionForm()
 
+    assignments = Assignment.objects.all()  
     return render(request, 'userpage/submit_assignment.html', {
         'form': form,
-        'assignment': assignment,
+        'assignments': assignments,
+        'assignment': assignment, 
     })
-
 
 
 
@@ -174,27 +176,26 @@ def submission_success(request):
     return render(request, 'userpage/submission_success.html')
 
 
-
+@login_required
 def assignment_submit(request):
     courses = Courses.objects.all()
     selected_course = request.GET.get('course', '')
-    
-    user = request.user
 
+    user = request.user
     if selected_course:
         assignments = Assignment.objects.filter(courses__name=selected_course)
     else:
         assignments = Assignment.objects.all()
 
-    submissions = Submission.objects.filter(assignment__in=assignments, user=user)
+    if user.is_staff:
+        submissions = Submission.objects.filter(assignment__in=assignments)
+    else:
+        submissions = Submission.objects.filter(assignment__in=assignments, user=user)
 
     context = {
         'courses': courses,
-        'assign': submissions,
+        'submissions': submissions,
         'selected_course': selected_course,
     }
-    
+
     return render(request, 'userpage/assignment_submit.html', context)
-
-
-

@@ -25,3 +25,18 @@ class Courses(models.Model):
         return self.name
     
 
+class Trend(models.Model):
+    image = models.FileField(upload_to='static/uploads', null=True)
+    description = models.TextField(max_length=200, blank=False, null=False)
+    price = models.IntegerField()
+    picture = models.FileField(upload_to='static/uploads', null=True)
+    name = models.CharField(max_length=200, blank=False, null=False)
+    trend = models.BooleanField(null=True,default=False)
+
+    def __str__(self):
+        return self.name
+
+    
+
+    
+
