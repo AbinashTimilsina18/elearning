@@ -18,8 +18,8 @@ class Courses(models.Model):
     name = models.CharField(max_length=200, blank=False, null=False)
     description = models.TextField(max_length=2000, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    top_cousrses = models.BooleanField(null=True,default=False)
     trending = models.BooleanField(null=True,default=False)
+    price = models.BooleanField(null=True,default=False)
 
     def __str__(self):
         return self.name

@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from .forms import *
 from .models import *
 from userpages.models import *
@@ -11,7 +11,7 @@ def AddCategory(request):
         categoryForm = CategoryForm(request.POST, request.FILES)
         if categoryForm.is_valid():
             categoryForm.save()
-            return redirect('addcategory')
+            return redirect('coursetable')
         else:
             return render(request,'add_category.html',{'catForm' : categoryForm})
             
@@ -32,7 +32,7 @@ def AddCourses(request):
         courseForm = CoursesForm(request.POST, request.FILES)
         if courseForm.is_valid():
             courseForm.save()
-            return redirect('allcourses')
+            return redirect('coursetable')
         else:
             return render(request,'add_courses.html',{'courForm' : courseForm})
             
@@ -58,7 +58,6 @@ def AllCourses(request):
     }
     return render(request, 'all_courses.html', context)
 
-@login_required
 def CourseDetails(request,course_id):
     course = Courses.objects.get(id=course_id)
     context = {
@@ -66,37 +65,71 @@ def CourseDetails(request,course_id):
     }
     return render(request,'course_details.html',context)
 
+def CourseTable(request):
+    context = {
+        'coursetable' : Courses.objects.all()
+    }
+    return render(request,'coursetable.html',context)
 
-def PDFVideo(request):
-    categories = Category.objects.all()
-    courses = Courses.objects.all()
+def delete_course(request, id):
+    course = get_object_or_404(Courses, id=id)
+    course.delete()
+    return redirect('coursetable')
+
+
+@login_required
+def PDFVideo(request, course_id):
+    course = get_object_or_404(Courses, id=course_id)
     
-    selected_category = request.GET.get('category')
-    selected_course = request.GET.get('course')
+    pdfs = Pdf.objects.filter(courses=course)
+    videos = Video.objects.filter(courses=course)
 
-    if selected_category and selected_course:
-        pdfs = Pdf.objects.filter(category__name=selected_category, courses__name=selected_course)
-        videos = Video.objects.filter(category__name=selected_category, courses__name=selected_course)
-    elif selected_category:
-        pdfs = Pdf.objects.filter(category__name=selected_category)
-        videos = Video.objects.filter(category__name=selected_category)
-    elif selected_course:
-        pdfs = Pdf.objects.filter(courses__name=selected_course)
-        videos = Video.objects.filter(courses__name=selected_course)
-    else:
-        pdfs = Pdf.objects.all()
-        videos = Video.objects.all()
+    selected_category = request.GET.get('category')
+
+    if selected_category:
+        pdfs = pdfs.filter(category__name=selected_category)
+        videos = videos.filter(category__name=selected_category)
+
+    categories = Category.objects.all()
 
     context = {
         'pdf': pdfs,
         'video': videos,
         'categories': categories,
-        'courses': courses,
+        'course': course,
         'selected_category': selected_category,
-        'selected_course': selected_course
     }
-    
+
     return render(request, 'view_pdf_video.html', context)
+
+def PDFVideoTable(request):
+    category_filter = request.GET.get('category', '')
+
+    pdftable = Pdf.objects.all()
+    videotable = Video.objects.all()
+
+    if category_filter:
+        pdftable = pdftable.filter(category__name__icontains=category_filter)
+        videotable = videotable.filter(category__name__icontains=category_filter)
+
+    context = {
+        'pdftable': pdftable,
+        'videotable': videotable,
+        'category_filter': category_filter,
+    }
+
+    return render(request, 'pdfvideotable.html', context)
+
+def delete_pdf(request, id):
+    pdf = get_object_or_404(Pdf, id=id)
+    pdf.delete()
+    return redirect('pdfvideotable')
+
+def delete_video(request, id):
+    video = get_object_or_404(Video, id=id)
+    video.delete()
+    return redirect('pdfvideotable')
+
 
 
 

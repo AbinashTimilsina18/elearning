@@ -4,13 +4,13 @@ from .forms import *
 from django.contrib import messages
 from .models import *
 from elearning.models import *
+from django.db.models import Q
 
 # Create your views here.
 
 def index(request):
     context = {
-        'staff': Staff.objects.all(),
-        'course': Courses.objects.filter(top_cousrses=True)[:4],
+        'course' : Courses.objects.filter(Q(trending=True) | Q(price__isnull=False))[:4],
         'trend': Trend.objects.filter(trend=True)[:4]
 
     }
@@ -199,3 +199,14 @@ def assignment_submit(request):
     }
 
     return render(request, 'userpage/assignment_submit.html', context)
+
+def NoticeTable(request):
+    context = {
+        'noticetable' : Notice.objects.all
+    }
+    return render(request, 'userpage/noticetable.html', context)
+
+def delete_notice(request, pk):
+    notice = get_object_or_404(Notice, pk=pk)
+    notice.delete()
+    return redirect('noticetable')
