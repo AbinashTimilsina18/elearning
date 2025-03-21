@@ -37,6 +37,7 @@ class Trend(models.Model):
         return self.name
 
     
-
+class Message(models.Model):
+    message = models.TextField()
     
 
