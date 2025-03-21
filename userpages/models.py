@@ -11,11 +11,12 @@ class Pdf(models.Model):
     django_pdf = models.BooleanField(null=True,blank=False)
 
 class Video(models.Model):
-    category = models.ForeignKey(Category,on_delete=models.CASCADE,null=True)
-    courses = models.ForeignKey(Courses,on_delete=models.CASCADE,null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    courses = models.ForeignKey(Courses, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=400)
     video_file = models.FileField(upload_to='static/pdfvideo', null=True, blank=True)
-    django_video = models.BooleanField(null=True,blank=True)
+    django_video = models.BooleanField(null=True, blank=True)
+
 
 class Notice(models.Model):
     title= models.CharField(max_length=500)
@@ -51,15 +52,6 @@ class Submission(models.Model):
         return f"{self.user.username} - {self.assignment.title}"
     
 
-class Staff(models.Model):
-    image = models.FileField(upload_to='static/staff')
-    name = models.CharField(max_length=200)
-    post = models.CharField(max_length=200)
-    description = models.TextField()
-    
-
-    def __str__(self):
-        return f"{self.name}-{self.post}"
 
 
 
