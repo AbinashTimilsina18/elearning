@@ -67,10 +67,10 @@
     <h1 class="text-center fw-bold mb-4">Our Most Popular Courses</h1>
     <p class="text-center px-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea doloremque ullam alias
       fugiat fugit error quibusdam maxime ipsam, esse aperiam?</p>
-    {% for item in Course %}
-    <div class="col-12 col-lg-3 col-md-4 col-sm-6 p-3 position-relative courses mb-4">
-      <a href="/course_details/{{item.id}}" class="card border-0 text-decoration-none">
-        <div class="border-0 h-100 shadow text-center">
+    {% for item in course %}
+    <div class="courses col-12 col-sm-6 col-md-3 col-lg-3 mb-4 d-flex">
+      <a href="/course_details/{{item.id}}" class="card border-0 text-decoration-none d-flex flex-column h-100">
+        <div class="h-100 text-center flex-grow-1" style="background-color: whitesmoke">
           <img src="{{item.image}}" class="card-img-top course-image" alt="..." height="150px" width="100%">
           {% if item.trending %}
           <span class="badge bg-danger position-absolute end-0 top-0">Free</span>
@@ -91,6 +91,7 @@
     {% endfor %}
   </div>
 </div>
+
 
 
 <div style="background-color: whitesmoke">

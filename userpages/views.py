@@ -12,9 +12,9 @@ def index(request):
     context = {
         'course' : Courses.objects.filter(Q(trending=True) | Q(price__isnull=False))[:4],
         'trend': Trend.objects.filter(trend=True)[:4]
-
     }
     return render(request, 'userpage/index.html', context)
+
 
 @login_required
 def Profile(request):
