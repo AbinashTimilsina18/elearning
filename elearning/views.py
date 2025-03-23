@@ -77,21 +77,36 @@ def delete_course(request, id):
     return redirect('coursetable')
 
 
-@login_required
 def PDFVideo(request, course_id):
+    # Check if the user is logged in
+    if not request.user.is_authenticated:
+        return redirect('login')  # Replace with your actual login URL if necessary
+    
+    # Get the course object
     course = get_object_or_404(Courses, id=course_id)
     
+    # If the course is paid, check if the user has made a payment
+    if course.price:
+        payment = Payment.objects.filter(user=request.user, course=course, status='completed').first()
+        
+        if not payment:
+            # If payment is not found, redirect to the payment page
+            return redirect('payment_page', course_id=course.id)
+
+    # Filter the PDFs and Videos related to the course
     pdfs = Pdf.objects.filter(courses=course)
     videos = Video.objects.filter(courses=course)
 
+    # Apply category filter if provided
     selected_category = request.GET.get('category')
-
     if selected_category:
         pdfs = pdfs.filter(category__name=selected_category)
         videos = videos.filter(category__name=selected_category)
 
+    # Get all available categories
     categories = Category.objects.all()
 
+    # Prepare context data for the template
     context = {
         'pdf': pdfs,
         'video': videos,
@@ -100,7 +115,33 @@ def PDFVideo(request, course_id):
         'selected_category': selected_category,
     }
 
+    # Render the response
     return render(request, 'view_pdf_video.html', context)
+
+
+@login_required
+def payment_page(request, course_id):
+    # Get the course object
+    course = get_object_or_404(Courses, id=course_id)
+
+    if course.price:
+        # If the course is paid, we simulate a payment here
+        if request.method == 'POST':
+            # Simulate payment process
+            Payment.objects.create(
+                user=request.user,
+                course=course,
+                amount=course.price,  # Assume there's a `price` field for paid courses
+                status='completed'
+            )
+
+            # Redirect to the course content page after successful payment
+            return redirect('view_pdf_video', course_id=course.id)
+
+        return render(request, 'userpage/payment_page.html', {'course': course})
+    else:
+        # If the course is free, automatically redirect to the content page
+        return redirect('view_pdf_video', course_id=course.id)
 
 def PDFVideoTable(request):
     category_filter = request.GET.get('category', '')

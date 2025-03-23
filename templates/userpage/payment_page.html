@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main-content %}
+  <h2>Payment for {{ course.title }}</h2>
+  
+  {% if course.price %}
+    <p>Course Price: ${{ course.price }}</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">Pay Now</button>
+    </form>
+  {% else %}
+    <p>This is a free course. You're automatically enrolled.</p>
+  {% endif %}
+{% endblock %}

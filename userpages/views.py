@@ -30,6 +30,7 @@ def Profile(request):
 
     return render(request, 'userpage/user_profile.html', {'form': form, 'user': user})
 
+
 def AddPdf(request):
     if request.method == 'POST':
         pdfForm = PdfForm(request.POST, request.FILES)
@@ -46,6 +47,7 @@ def AddPdf(request):
     }
     return render(request, 'userpage/add_pdf.html', context)
 
+
 def AddVideo(request):
     if request.method == 'POST':
         videoForm = VideoForm(request.POST, request.FILES)
@@ -61,6 +63,7 @@ def AddVideo(request):
         'videoForm': videoForm
     }
     return render(request, 'userpage/add_video.html', context)
+
 
 def Django(request):
     context = {
@@ -117,14 +120,28 @@ def create_assignment(request):
         {'form': form, 'courses': courses, 'selected_course': selected_course}
     )
 
+
 def view_assignment(request):
     courses = Courses.objects.all()
     selected_course = request.GET.get('course')
 
-    if selected_course:
-        assignments = Assignment.objects.filter(courses__name=selected_course, pdf_file__isnull=False)
+    if request.user.is_staff:
+        if selected_course:
+            assignments = Assignment.objects.filter(courses__name=selected_course, pdf_file__isnull=False)
+        else:
+            assignments = Assignment.objects.filter(pdf_file__isnull=False)
     else:
-        assignments = Assignment.objects.filter(pdf_file__isnull=False)
+        if selected_course:
+            assignments = Assignment.objects.filter(
+                courses__name=selected_course,
+                courses__users=request.user,
+                pdf_file__isnull=False
+            )
+        else:
+            assignments = Assignment.objects.filter(
+                courses__users=request.user,
+                pdf_file__isnull=False
+            )
 
     context = {
         'assign': assignments,
@@ -132,7 +149,6 @@ def view_assignment(request):
         'selected_course': selected_course,
     }
     return render(request, 'userpage/view_assignment.html', context)
-
 
 
 def delete_assignment(request, pk):
@@ -143,10 +159,9 @@ def delete_assignment(request, pk):
 
 @login_required
 def submit_assignment(request, assignment_id):
-  
+
     user_courses = Courses.objects.filter(users=request.user)
 
-  
     assignment = get_object_or_404(Assignment, id=assignment_id)
 
     if assignment.courses not in user_courses:
@@ -171,9 +186,18 @@ def submit_assignment(request, assignment_id):
     })
 
 
-
 def submission_success(request):
     return render(request, 'userpage/submission_success.html')
+
+
+def delete_submission(request, id):
+    if not request.user.is_authenticated or not request.user.is_staff:
+        return redirect('some_default_view')
+
+    submission = get_object_or_404(Submission, id=id)
+    submission.delete()
+
+    return redirect('viewassignment')
 
 
 @login_required
@@ -200,11 +224,13 @@ def assignment_submit(request):
 
     return render(request, 'userpage/assignment_submit.html', context)
 
+
 def NoticeTable(request):
     context = {
         'noticetable' : Notice.objects.all
     }
     return render(request, 'userpage/noticetable.html', context)
+
 
 def delete_notice(request, pk):
     notice = get_object_or_404(Notice, pk=pk)

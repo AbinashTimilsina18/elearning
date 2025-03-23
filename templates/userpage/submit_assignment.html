@@ -11,7 +11,7 @@
             <div class="form-group col-md-12">
                 <label for="id_assignment">Assignment</label>
                 <select name="assignment" class="form-control" id="id_assignment">
-                    <option value="">Select Assignment</option>  <!-- Default option -->
+                    <option value="">Select Assignment</option>
                     {% for assignment in assignments %}
                         <option value="{{ assignment.id }}" {% if assignment.id == assignment.id %}selected{% endif %}>
                             {{ assignment.title }}
