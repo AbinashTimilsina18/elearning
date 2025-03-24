@@ -5,12 +5,16 @@ from django.contrib import messages
 from .models import *
 from elearning.models import *
 from django.db.models import Q
+from django.views import View
+from django.urls import reverse
+from django.http import Http404
+import stripe
 
 # Create your views here.
 
 def index(request):
     context = {
-        'course' : Courses.objects.filter(Q(trending=True) | Q(price__isnull=False))[:4],
+        'course' : Courses.objects.filter(Q(trending=True) | Q(is_paid__isnull=False))[:4],
         'trend': Trend.objects.filter(trend=True)[:4]
     }
     return render(request, 'userpage/index.html', context)
@@ -236,3 +240,160 @@ def delete_notice(request, pk):
     notice = get_object_or_404(Notice, pk=pk)
     notice.delete()
     return redirect('noticetable')
+
+
+import uuid
+
+stripe.api_key = "sk_test_your_secret_key_here"
+
+def transactionForm(request, course_id):
+    user = request.user
+    course = get_object_or_404(Courses, id=course_id)
+
+    if request.method == "POST":
+        transactionForm = TransactionForm(request.POST)
+        if transactionForm.is_valid():
+            price = course.price
+            total_price = price
+            phone_no = request.POST.get('phone_no')
+            address = request.POST.get('address')
+            payment_method = request.POST.get('payment_method')
+            payment_status = 'pending'
+
+            transaction_id = str(uuid.uuid4())
+
+            transaction = Transaction.objects.create(
+                user=user,
+                course=course,
+                transaction_id=transaction_id,
+                amount=total_price,
+                payment_method=payment_method,
+                payment_status=payment_status,
+                phone_no=phone_no,
+                address=address,
+            )
+
+            if transaction.payment_method == 'esewa':
+                return redirect(reverse("esewaform") + "?t_id=" + str(transaction.id) + "&c_id=" + str(course.id))
+
+            elif transaction.payment_method == 'stripe':
+                session = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    line_items=[{
+                        'price_data': {
+                            'currency': 'usd',
+                            'product_data': {
+                                'name': course.name,
+                            },
+                            'unit_amount': int(total_price * 100),
+                        },
+                        'quantity': 1,
+                    }],
+                    mode='payment',
+                    success_url=request.build_absolute_uri(reverse('payment_success', args=[transaction.id])),
+                    cancel_url=request.build_absolute_uri(reverse('payment_cancel', args=[transaction.id])),
+                )
+
+                return redirect(session.url, code=303)
+
+            else:
+                messages.error(request, "Invalid payment method.")
+                return redirect('allcourses')
+
+    else:
+        transactionForm = TransactionForm()
+
+    context = {
+        'transactionForm': transactionForm,
+        'course': course
+    }
+
+    return render(request, 'userpage/transactionform.html', context)
+
+
+def payment_success(request, transaction_id):
+    transaction = Transaction.objects.get(id=transaction_id)
+    transaction.payment_status = 'completed'
+    transaction.save()
+
+    messages.success(request, "Payment successful! Your order has been placed.")
+    return redirect('view_pdf_video', course_id=transaction.course.id)
+
+def payment_cancel(request, transaction_id):
+    transaction = Transaction.objects.get(id=transaction_id)
+    messages.error(request, "Payment canceled.")
+    return redirect('allcourses')
+
+
+import hmac
+import hashlib
+import base64
+
+class Esewaverify(View):
+    def get(self, request, *args, **kwargs):
+        t_id = request.GET.get('t_id')
+        c_id = request.GET.get('c_id')
+
+        if not t_id or not c_id:
+            raise Http404("Transaction or Course ID is missing")
+
+        try:
+            course = Courses.objects.get(id=c_id)
+        except Courses.DoesNotExist:
+            raise Http404("Course not found")
+
+        try:
+            transaction = Transaction.objects.get(id=t_id)
+        except Transaction.DoesNotExist:
+            raise Http404("Transaction not found")
+
+        uuid_val = uuid.uuid4()
+
+        def genSha256(key, message):
+            key = key.encode('utf-8')
+            message = message.encode('utf-8')
+            hmac_sha256 = hmac.new(key, message, hashlib.sha256)
+            digest = hmac_sha256.digest()
+            signature = base64.b64encode(digest).decode('utf-8')
+            return signature
+
+        secret_key = "8gBm/:&EnhH.1/q"
+        data_to_sign = f"total_amount={transaction.amount},transaction_uuid={uuid_val},product_code=EPAYTEST"
+
+        result = genSha256(secret_key, data_to_sign)
+        data = {
+            'amount': transaction.amount,
+            "total_price": transaction.amount,
+            "transaction_uuid": uuid_val,
+            "product_code": "EPAYTEST",
+            "signature": result
+        }
+
+        context = {
+            'transaction': transaction,
+            'data': data,
+            'course': course
+        }
+
+        return render(request, 'userpage/esewa.html', context)
+
+import json
+
+@login_required
+def esewaverify(request, transaction_id, course_id):
+    if request.method == "GET":
+        data = request.GET.get('data')
+        decoded_data = base64.b64decode(data).decode('utf-8')
+        map_data = json.loads(decoded_data)
+
+        transaction = get_object_or_404(Transaction, id=transaction_id)
+
+        if map_data.get('status') == 'COMPLETE':
+            transaction.payment_status = 'completed'
+            transaction.save()
+
+            messages.success(request, 'Payment successful. Cart deleted.')
+            return redirect('view_pdf_video', course_id=course_id)
+        else:
+            messages.error(request, 'Payment failed.')
+            return redirect('allcourses')

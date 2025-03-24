@@ -78,8 +78,8 @@
                 {% if item.trending %}
                   <span class="badge bg-danger position-absolute top-0 end-0 m-2">Free</span>
                 {% endif %}
-                {% if item.price %}
-                  <span class="badge bg-danger position-absolute top-0 end-0 m-2">$200</span>
+                {% if item.is_paid %}
+                  <span class="badge bg-danger position-absolute top-0 end-0 m-2">paid</span>
                 {% endif %}
               </div>
               <div class="card-body">

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block main-content %}
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {{ transactionForm.as_p }}
+    <button type="submit">Proceed to Payment</button>
+</form>
+
+
+{% endblock main-content %}

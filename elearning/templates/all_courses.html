@@ -46,8 +46,8 @@
                     {% if item.trending %}
                     <span class="badge bg-danger position-absolute end-0 top-0">Free</span>
                     {% endif %}
-                    {% if item.price %}
-                    <span class="badge bg-danger position-absolute end-0 top-0">$12.9</span>
+                    {% if item.is_paid %}
+                    <span class="badge bg-danger position-absolute end-0 top-0">paid</span>
                     {% endif %}
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title fw-bold">{{item.name}}</h5>

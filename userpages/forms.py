@@ -1,3 +1,4 @@
+from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
 from .models import *
@@ -43,4 +44,10 @@ class SubmissionForm(forms.ModelForm):
 
     assignment = forms.ModelChoiceField(queryset=Assignment.objects.all())
     pdf_file = forms.FileField()
+
+
+class TransactionForm(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ['phone_no', 'address', 'payment_method']
 
