@@ -21,7 +21,8 @@ urlpatterns = [
     path('transactionform/<int:course_id>/', transactionForm, name='transactionform'),
     path('esewa-form', Esewaverify.as_view(), name='esewaform'),
     path('esewaverify/<int:transaction_id>/<int:course_id>', esewaverify, name='esewaverify'),
-
+    path('payment-success/<int:transaction_id>/', payment_success, name='payment_success'),
+    path('payment-cancel/<int:transaction_id>/', payment_cancel, name='payment_cancel'),
 ]
 
 

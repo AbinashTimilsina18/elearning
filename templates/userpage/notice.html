@@ -2,10 +2,14 @@
 
 {% block main-content %}
 
+<div class="notice">
+    <h2 class="text-center fw-bold py-5">Notice</h2>
+</div>
+
 <div class="container d-flex justify-content-center my-5">
     <div class="row justify-content-center">
         {% for item in notice %}
-        <div class="col-md-8 col-sm-12 col-lg-6 mb-4">
+        <div class="col-md-8 col-sm-12 col-lg-12 mb-4">
             <div class="card shadow border-0">
                 <div class="card-body">
                     <i class="bi bi-megaphone-fill d-flex justify-content-center py-3 text-danger display-1"></i>

@@ -244,7 +244,7 @@ def delete_notice(request, pk):
 
 import uuid
 
-stripe.api_key = "sk_test_your_secret_key_here"
+stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
 
 def transactionForm(request, course_id):
     user = request.user

@@ -55,3 +55,8 @@ header{
     transition: 0.5s;
     transform: scale(1.05);
 }
+
+
+.notice{
+    background-color:  #d3f3fe;
+}
