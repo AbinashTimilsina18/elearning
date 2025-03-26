@@ -7,12 +7,10 @@
 {% block main-content %}
 
 <div class="container mt-5 mb-5">
-<<<<<<< HEAD
     <div class="d-flex  justify-content-center">
-=======
     {% include "components/messages.html" %}
     <div class="d-flex justify-content-center">
->>>>>>> c3590a36c8cb1ed9748e466ab218a00d2d96494f
+
         <div class="col-md-5 shadow p-4 rounded-5 m-auto">
             <form method="POST" action="{% url 'login' %}">
                 {% csrf_token %}

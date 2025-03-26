@@ -5,16 +5,16 @@ from django.contrib import messages
 from .models import *
 from elearning.models import *
 from django.db.models import Q
-<<<<<<< HEAD
+
 from django.core.mail import send_mail
 from django.conf import settings
-=======
+
 from django.views import View
 from django.urls import reverse
 from django.http import Http404
 import stripe
 
->>>>>>> c3590a36c8cb1ed9748e466ab218a00d2d96494f
+
 # Create your views here.
 
 def index(request):
