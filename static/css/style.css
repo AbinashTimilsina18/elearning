@@ -50,10 +50,6 @@ header{
     transform: scale(1.05);
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 63962235bde13548f6f638e396fb43ada34ab80a
 @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -150,7 +146,4 @@ header{
 .notice{
     background-color:  #d3f3fe;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 63962235bde13548f6f638e396fb43ada34ab80a
