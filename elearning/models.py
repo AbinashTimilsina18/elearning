@@ -40,5 +40,6 @@ class Trend(models.Model):
     
 class Message(models.Model):
     message = models.TextField()
-    
+
+
 
