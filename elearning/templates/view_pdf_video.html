@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}
+<title>PDF Video</title>
+{% endblock title %}
+
 {% block main-content %}
 <div class="container my-5">
     <h2 class="text-secondary">{{ course.name }} - PDF & Video</h2>
@@ -15,7 +19,6 @@
                         <th class="text-center px-4">Courses</th>
                         <th class="text-center px-4">Title</th>
                         <th class="text-center px-4">PDF_File</th>
-                        {% comment %} <th class="text-center px-4">Action</th> {% endcomment %}
                     </tr>
                 </thead>
                 <tbody>
@@ -25,17 +28,12 @@
                         <td class="text-center">{{ pdf.category }}</td>
                         <td class="text-center">{{ pdf.courses }}</td>
                         <td class="text-center">{{ pdf.title }}</td>
-                        <td class="text-center"><a href="{{ pdf.pdf_file.url }}"
-                                class="text-decoration-none text-black">Show</a></td>
-                        {% comment %} <td class="text-center">
-                            <a href="{% url 'delete_assignment' item.pk %}" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Are you sure you want to delete this item?')">
-                                <i class="bi bi-trash"></i> Delete
-                            </a>
-                        </td> {% endcomment %}
+                        <td class="text-center"><a href="{{ pdf.pdf_file.url }}" class="text-decoration-none text-black">Show</a></td>
                     </tr>
                     {% empty %}
-                    <li>No PDFs available.</li>
+                    <tr>
+                        <td colspan="5" class="text-center">No PDFs available.</td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -51,7 +49,6 @@
                         <th class="text-center px-4">Courses</th>
                         <th class="text-center px-4">Title</th>
                         <th class="text-center px-4">Video_File</th>
-                        {% comment %} <th class="text-center px-4">Action</th> {% endcomment %}
                     </tr>
                 </thead>
                 <tbody>
@@ -61,17 +58,12 @@
                         <td class="text-center">{{ item.category }}</td>
                         <td class="text-center">{{ item.courses }}</td>
                         <td class="text-center">{{ item.title }}</td>
-                        <td class="text-center"><a href="{{ item.video_file.url }}"
-                                class="text-decoration-none text-black">Show</a></td>
-                        {% comment %} <td class="text-center">
-                            <a href="{% url 'delete_assignment' item.pk %}" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Are you sure you want to delete this item?')">
-                                <i class="bi bi-trash"></i> Delete
-                            </a>
-                        </td> {% endcomment %}
+                        <td class="text-center"><a href="{{ item.video_file.url }}" class="text-decoration-none text-black">Show</a></td>
                     </tr>
                     {% empty %}
-                    <li>No Videos available.</li>
+                    <tr>
+                        <td colspan="5" class="text-center">No Videos available.</td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>

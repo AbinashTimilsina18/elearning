@@ -1,5 +1,6 @@
 from django.db import models
 from elearning.models import *
+from django.core.validators import *
 
 # Create your models here.
 
@@ -52,17 +53,30 @@ class Submission(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.assignment.title}"
     
-class Payment(models.Model):
+
+class Transaction(models.Model):
+    TRANSACTION_STATUS = (
+        ('pending', 'Pending'),
+        ('completed', 'Completed'),
+        ('failed', 'Failed'),
+    )
+
+    PAYMENT_METHOD = (
+        ('esewa', 'Esewa'),
+        ('stripe', 'Stripe'),
+    )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Courses, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=50, choices=[('pending', 'Pending'), ('completed', 'Completed')])
-    date_paid = models.DateTimeField(auto_now_add=True)
+    transaction_id = models.CharField(max_length=100, unique=True)
+    amount = models.FloatField()
+    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHOD)
+    payment_status = models.CharField(max_length=10, choices=TRANSACTION_STATUS, default='pending')
+    phone_no = models.CharField(max_length=20, validators=[MinLengthValidator(10), MaxLengthValidator(15)])
+    address = models.CharField(max_length=200)
+    transaction_date = models.DateTimeField(auto_now_add=True)
+    payment_details = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.user} - {self.status}"
-    
-
-
-
+        return f"Transaction {self.transaction_id} - {self.user.username}"
 

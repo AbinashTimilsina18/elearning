@@ -20,4 +20,11 @@ urlpatterns = [
     path('submission_success/', submission_success, name='submission_success'),
     path('assignment_submit/', assignment_submit, name='assignment_submit'),
     path('delete_submission/<int:id>/', delete_submission, name='delete_submission'),
+    path('transactionform/<int:course_id>/', transactionForm, name='transactionform'),
+    path('esewa-form', Esewaverify.as_view(), name='esewaform'),
+    path('esewaverify/<int:transaction_id>/<int:course_id>', esewaverify, name='esewaverify'),
+    path('payment-success/<int:transaction_id>/', payment_success, name='payment_success'),
+    path('payment-cancel/<int:transaction_id>/', payment_cancel, name='payment_cancel'),
 ]
+
+
