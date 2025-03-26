@@ -5,7 +5,8 @@ from django.contrib import messages
 from .models import *
 from elearning.models import *
 from django.db.models import Q
-
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 
 def index(request):
@@ -14,6 +15,31 @@ def index(request):
         'trend': Trend.objects.filter(trend=True)[:4]
     }
     return render(request, 'userpage/index.html', context)
+
+
+def Aboutus(request):
+    return render(request, 'userpage/aboutus.html', )
+
+def Contactus(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+        try:
+            send_mail(
+                f"New contact message from {name}",
+                message,
+                email,
+                [settings.EMAIL_HOST_USER],
+            )
+            messages.success(request, 'Your message has been sent successfully!')
+            return render(request, 'userpage/contactus.html')
+        
+        except Exception as e:
+            messages.error(request, f"Something went wrong: {str(e)}")
+            return render(request, 'userpage/contactus.html')
+        
+    return render(request, 'userpage/contactus.html', )
 
 
 @login_required

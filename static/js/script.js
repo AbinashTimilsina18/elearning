@@ -92,3 +92,6 @@ showLessVideoButton.addEventListener('click', hideVideoItems);
 
 showInitialPdfItems();
 showInitialVideoItems();
+
+
+
