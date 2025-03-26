@@ -33,26 +33,24 @@ def index(request):
 def Aboutus(request):
     return render(request, 'userpage/aboutus.html', )
 
-def Contactus(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
-        try:
-            send_mail(
-                f"New contact message from {name}",
-                message,
-                email,
-                [settings.EMAIL_HOST_USER],
-            )
-            messages.success(request, 'Your message has been sent successfully!')
-            return render(request, 'userpage/contactus.html')
-        
-        except Exception as e:
-            messages.error(request, f"Something went wrong: {str(e)}")
-            return render(request, 'userpage/contactus.html')
-        
-    return render(request, 'userpage/contactus.html', )
+
+def contact_us(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your message has been sent successfully!")
+            return redirect('contactus')
+        else:
+            messages.error(request, "Please correct the errors in the form.")
+    else:
+        form = ContactForm()
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'userpage/contactus.html', context)
+
 
 
 @login_required

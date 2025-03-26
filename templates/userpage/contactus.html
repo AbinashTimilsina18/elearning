@@ -1,47 +1,59 @@
 {% extends "base.html" %}
 
 {% block main-content %}
-<div class=""style="background-color: #D3F3FE;">
+<div class="" style="background-color: #D3F3FE;">
     <div class="container">
+        {% include "components/messages.html" %}
         <h1 class="display-2 text-black text-center fw-bold pt-5">Contact Us</h1>
         <p class="text-black text-center pb-5">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repellendus,
             <br>aperiam eius dolor exercitationem rem delectus mollitia cumque quia provident commodi.
         </p>
     </div>
 </div>
-<div class="container d-flex justify-content-center" >
+
+
+<div class="container d-flex justify-content-center">
+
     <div class="col-md-6 shadow p-3" style="background-color: whitesmoke;">
         <h2 class="display-5 text-center mb-4 fw-bold">Contact Us</h2>
+
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <form method="POST" action="{% url 'contactus' %}">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="name" class="form-label"></label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name"
-                    required>
+                <label for="name" class="form-label">Name</label><br>
+                {{ form.name }}
                 <div class="invalid-feedback">
                     Please enter your full name.
                 </div>
             </div>
+
             <div class="mb-3">
-                <label for="email" class="form-label"></label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email"
-                    required>
+                <label for="email" class="form-label">Email</label><br>
+                {{ form.email }}
                 <div class="invalid-feedback">
                     Please provide a valid email address.
                 </div>
             </div>
+
             <div class="mb-3">
-                <label for="message" class="form-label"></label>
-                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Your message here"
-                    required></textarea>
+                <label for="message" class="form-label">Message</label><br>
+                {{ form.message }}
                 <div class="invalid-feedback">
                     Please enter your message.
                 </div>
             </div>
+
             <button type="submit" class="btn btn-primary w-100">Submit</button>
         </form>
     </div>
-
 
     <div class="col-md-6 text-center display-5 fw-bold p-2">
         Location

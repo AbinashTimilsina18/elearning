@@ -80,3 +80,12 @@ class Transaction(models.Model):
     def __str__(self):
         return f"Transaction {self.transaction_id} - {self.user.username}"
 
+    
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+
+    def __str__(self):
+        return f"Message from {self.name} ({self.email})"
+

@@ -51,3 +51,15 @@ class TransactionForm(forms.ModelForm):
         model = Transaction
         fields = ['phone_no', 'address', 'payment_method']
 
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'message']
+    
+    def clean_message(self):
+        message = self.cleaned_data.get('message')
+        if len(message) < 10:
+            raise forms.ValidationError("Your message is too short. Please provide more details.")
+        return message
+

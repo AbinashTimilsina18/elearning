@@ -1,14 +1,7 @@
 {% if messages %}
-<script>
+<div class="messages">
     {% for message in messages %}
-        Swal.fire({
-            title: "{% if message.tags == 'success' %}Success{% elif message.tags == 'error' %}Error{% else %}Information{% endif %}",
-            text: "{{ message }}",
-            icon: "{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}",
-            showConfirmButton: true,
-            confirmButtonColor: "{% if message.tags == 'success' %}#28a745{% elif message.tags == 'error' %}#dc3545{% else %}#17a2b8{% endif %}",
-            draggable: true
-        });
+        <p{% if message.tags %} class="alert alert-sm alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
     {% endfor %}
-</script>
+</div>
 {% endif %}

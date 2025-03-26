@@ -6,11 +6,17 @@
 
 {% block main-content %}
 <div class="container mt-5 mb-5">
-    <div class="d-flex justify-content-center">
-        <div class="col-md-5 shadow p-4 rounded-5 m-auto">
+    {% include "components/messages.html" %}
+    <p class=" display-4 fw-bold text-center">Register Here</p>
+    <div class="d-flex justify-content-between shadow">
+
+        <div class="col-md-6">
+            <img src="/static/images/register.avif" height="500px" width="100%" style="padding-left: 40px;">
+        </div>
+
+        <div class="col-md-5 rounded-5 m-auto">
             <form method="POST" action="{% url 'register' %}">
                 {% csrf_token %}
-                <h2 class="text-center">Register Here</h2>
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>

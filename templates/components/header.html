@@ -42,7 +42,7 @@
         <li><a href="{% url 'allcourses' %}" class="nav-link px-2 text-black fw-bold {% if request.path == '/all_courses' %} active {% endif %}">Courses</a></li>
         <li><a href="viewassignment" class="nav-link px-2 text-black fw-bold {% if request.path == '/viewassignment' %} active {% endif %}">Assignment</a></li>
         <li><a href="{% url 'notice' %}" class="nav-link px-2 text-black fw-bold {% if request.path == '/notice' %} active {% endif %}">Notice</a></li>
-        <li><a href="#" class="nav-link px-2 text-black fw-bold {% if request.path == '#' %} active {% endif %}">Contact Us</a></li>
+        <li><a href="{% url 'contactus' %}" class="nav-link px-2 text-black fw-bold {% if request.path == '/contactus' %} active {% endif %}">Contact Us</a></li>
     </ul>
 
     <div class="col-md-2 text-center">
