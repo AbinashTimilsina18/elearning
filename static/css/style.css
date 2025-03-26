@@ -50,7 +50,6 @@ header{
     transform: scale(1.05);
 }
 
-<<<<<<< HEAD
 @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -143,9 +142,7 @@ header{
     box-shadow: 0 5px 20px #69c8e8;
 }
 
-=======
 
 .notice{
     background-color:  #d3f3fe;
 }
->>>>>>> c3590a36c8cb1ed9748e466ab218a00d2d96494f

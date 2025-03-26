@@ -87,9 +87,8 @@
       doloremque ullam alias
       fugiat fugit error quibusdam maxime ipsam, esse aperiam?</p>
 
-    <div class="row">
+    <div class="row d-flex justify-content-between">
       {% for item in course %}
-<<<<<<< HEAD
       <div class="courses col-12 col-sm-6 col-md-4 col-lg-3 p-3">
         <div class="card border-0 shadow-sm h-100 text-center">
           <a href="/course_details/{{ item.id }}" class="text-decoration-none">
@@ -111,35 +110,13 @@
               <p class="text-secondary">{{ item.created_at }}</p>
             </div>
           </a>
-=======
-        <div class="courses col-12 col-sm-6 col-md-4 col-lg-3 p-3">
-          <div class="card border-0 shadow-sm h-100 text-center">
-            <a href="/course_details/{{ item.id }}" class="text-decoration-none">
-              <div class="position-relative">
-                <img src="{{ item.image }}" class="card-img-top course-image" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
-                {% if item.trending %}
-                  <span class="badge bg-danger position-absolute top-0 end-0 m-2">Free</span>
-                {% endif %}
-                {% if item.is_paid %}
-                  <span class="badge bg-danger position-absolute top-0 end-0 m-2">paid</span>
-                {% endif %}
-              </div>
-              <div class="card-body">
-                <h5 class="card-title fw-bold">{{ item.name }}</h5>
-                <p class="card-text text-muted" style="text-align: justify; min-height: 75px;">
-                  {{ item.description|truncatewords:9 }}
-                </p>
-                <p class="text-secondary">{{ item.created_at }}</p>
-              </div>
-            </a>
-          </div>
->>>>>>> c3590a36c8cb1ed9748e466ab218a00d2d96494f
         </div>
       </div>
       {% endfor %}
     </div>
   </div>
 </div>
+
 
 
 
