@@ -6,6 +6,11 @@ from .models import *
 from elearning.models import *
 from django.db.models import Q
 
+
+from django.core.mail import send_mail
+from django.conf import settings
+
+
 from django.core.mail import send_mail
 from django.conf import settings
 
